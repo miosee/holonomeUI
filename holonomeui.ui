@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>943</width>
-    <height>550</height>
+    <width>1344</width>
+    <height>934</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -460,7 +460,7 @@
            </font>
           </property>
           <property name="text">
-           <string>a (rad) :</string>
+           <string>a (°) :</string>
           </property>
          </widget>
         </item>
@@ -669,7 +669,7 @@
            </font>
           </property>
           <property name="text">
-           <string>a (rad) :</string>
+           <string>a (°) :</string>
           </property>
          </widget>
         </item>
@@ -872,7 +872,7 @@
            </font>
           </property>
           <property name="text">
-           <string>a (rad) :</string>
+           <string>a (°) :</string>
           </property>
          </widget>
         </item>
@@ -1075,7 +1075,7 @@
            </font>
           </property>
           <property name="text">
-           <string>a (m) :</string>
+           <string>a (°) :</string>
           </property>
          </widget>
         </item>
@@ -1196,7 +1196,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Vr (rad/s) :</string>
+           <string>Vr (°/s) :</string>
           </property>
          </widget>
         </item>
@@ -1338,7 +1338,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Ar (rad/s²) :</string>
+           <string>Ar (°/s²) :</string>
           </property>
          </widget>
         </item>
@@ -1432,5 +1432,54 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>lineEdit_SetPosX</sender>
+   <signal>returnPressed()</signal>
+   <receiver>pushButton_SetPosend</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>99</x>
+     <y>844</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>68</x>
+     <y>906</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_SetPosY</sender>
+   <signal>returnPressed()</signal>
+   <receiver>pushButton_SetPosend</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>858</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>87</x>
+     <y>906</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_SetPosA</sender>
+   <signal>returnPressed()</signal>
+   <receiver>pushButton_SetPosend</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>100</x>
+     <y>878</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>94</x>
+     <y>903</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

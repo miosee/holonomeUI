@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'holonomeui.ui'
 **
-** Created by: Qt User Interface Compiler version 5.4.1
+** Created by: Qt User Interface Compiler version 5.4.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -128,7 +128,7 @@ public:
         if (HolonomeUI->objectName().isEmpty())
             HolonomeUI->setObjectName(QStringLiteral("HolonomeUI"));
         HolonomeUI->setEnabled(true);
-        HolonomeUI->resize(1344, 934);
+        HolonomeUI->resize(943, 550);
         centralWidget = new QWidget(HolonomeUI);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -691,9 +691,6 @@ public:
         HolonomeUI->setCentralWidget(centralWidget);
 
         retranslateUi(HolonomeUI);
-        QObject::connect(lineEdit_SetPosX, SIGNAL(returnPressed()), pushButton_SetPosend, SLOT(click()));
-        QObject::connect(lineEdit_SetPosY, SIGNAL(returnPressed()), pushButton_SetPosend, SLOT(click()));
-        QObject::connect(lineEdit_SetPosA, SIGNAL(returnPressed()), pushButton_SetPosend, SLOT(click()));
 
         QMetaObject::connectSlotsByName(HolonomeUI);
     } // setupUi
@@ -719,26 +716,26 @@ public:
         groupBox_SetPos->setTitle(QApplication::translate("HolonomeUI", "Set Position", 0));
         label_SetPosX->setText(QApplication::translate("HolonomeUI", "x (m) :", 0));
         label_SetPosY->setText(QApplication::translate("HolonomeUI", "y (m) :", 0));
-        label_SetPosA->setText(QApplication::translate("HolonomeUI", "a (\302\260) :", 0));
+        label_SetPosA->setText(QApplication::translate("HolonomeUI", "a (rad) :", 0));
         pushButton_SetPosend->setText(QApplication::translate("HolonomeUI", "Send", 0));
         groupBox_Move->setTitle(QApplication::translate("HolonomeUI", "Move", 0));
         label_MoveX->setText(QApplication::translate("HolonomeUI", "x (m) :", 0));
         label_MoveY->setText(QApplication::translate("HolonomeUI", "y (m) :", 0));
-        label_MoveA->setText(QApplication::translate("HolonomeUI", "a (\302\260) :", 0));
+        label_MoveA->setText(QApplication::translate("HolonomeUI", "a (rad) :", 0));
         pushButton_MoveSend->setText(QApplication::translate("HolonomeUI", "Send", 0));
         groupBox_Goto->setTitle(QApplication::translate("HolonomeUI", "Go To", 0));
         label_GotoX->setText(QApplication::translate("HolonomeUI", "x (m) :", 0));
         label_GotoY->setText(QApplication::translate("HolonomeUI", "y (m) :", 0));
-        label_GotoA->setText(QApplication::translate("HolonomeUI", "a (\302\260) :", 0));
+        label_GotoA->setText(QApplication::translate("HolonomeUI", "a (m) :", 0));
         pushButton_GotoSend->setText(QApplication::translate("HolonomeUI", "Send", 0));
         checkBox_GotoAlphaEnabled->setText(QApplication::translate("HolonomeUI", "a", 0));
         groupBox_SetSpeed->setTitle(QApplication::translate("HolonomeUI", "Set Speed", 0));
         pushButton_SetSpeedSend->setText(QApplication::translate("HolonomeUI", "Send", 0));
-        label_SetSpeedR->setText(QApplication::translate("HolonomeUI", "Vr (\302\260/s) :", 0));
+        label_SetSpeedR->setText(QApplication::translate("HolonomeUI", "Vr (rad/s) :", 0));
         label_SetSpeedL->setText(QApplication::translate("HolonomeUI", "Vt (m/s) :", 0));
         groupBox_SetAcc->setTitle(QApplication::translate("HolonomeUI", "Set Acceleration", 0));
         pushButton_SetAccSend->setText(QApplication::translate("HolonomeUI", "Send", 0));
-        label_SetAccR->setText(QApplication::translate("HolonomeUI", "Ar (\302\260/s\302\262) :", 0));
+        label_SetAccR->setText(QApplication::translate("HolonomeUI", "Ar (rad/s\302\262) :", 0));
         label_SetAccL->setText(QApplication::translate("HolonomeUI", "At (m/s\302\262) :", 0));
     } // retranslateUi
 

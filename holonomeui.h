@@ -4,7 +4,10 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QVector>
-#include <QVector3D>
+//#include <QVector3D>
+#include <QGraphicsScene>
+//#include <QGraphicsView>
+#include <QGraphicsLineItem>
 #include "../can/CanTypes.h"
 #include "PCANBasic.h"
 #include "position.h"
@@ -21,6 +24,8 @@ class HolonomeUI : public QMainWindow
 public:
     explicit HolonomeUI(QWidget *parent = 0);
     ~HolonomeUI();
+    void resizeMap();
+    void clearMap();
 
 private slots:
     void on_pushButton_Pcan_clicked();
@@ -30,6 +35,8 @@ private slots:
     void on_pushButton_PropStateTest_clicked();
     void on_pushButton_SetPosend_clicked();
     void on_pushButton_MoveSend_clicked();
+    void resizeEvent();
+    void on_pushButton_GotoSend_clicked();
 
 private:
     Ui::HolonomeUI *ui;
@@ -37,6 +44,8 @@ private:
     bool isConnected;
     QVector<Position> curPos;
     QVector<float> curPosTime;
+    QGraphicsScene *mapScene;
+    QVector<QGraphicsLineItem*> trajLines;
 };
 
 #endif // HOLONOMEUI_H

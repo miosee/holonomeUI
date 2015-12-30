@@ -1,5 +1,5 @@
 #include "position.h"
-#include <math.h>
+
 
 Position::Position()
 {
@@ -43,7 +43,7 @@ void Position::setFromCanMsg(TPCANMsg canMsg) {
     a = canMsg.DATA[4] + 256*canMsg.DATA[5];
     if (canMsg.DATA[5] > 128)
         a -= 0x10000;
-    a *= (M_PI/1800);
+    a /= 10;
 }
 
 float Position::getX() {
