@@ -7,5 +7,5 @@ int main(int argc, char *argv[])
     HolonomeUI w;
     w.show();
 
-    return a.exec();
+    exit(a.exec());
 }

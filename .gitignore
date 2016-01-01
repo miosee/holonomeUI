@@ -48,3 +48,11 @@ Temporary Items
 *.exe
 debug/holonomeui.o
 *.o
+Win32/Debug/holonomeUI.log
+*.tlog
+Win32/Debug/vc120.pdb
+*.pdb
+debug/moc_graph.cpp
+debug/moc_posgraph.cpp
+debug/moc_qcustomplot.cpp
+release/moc_holonomeui.cpp

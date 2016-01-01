@@ -32,16 +32,16 @@ void Position::set(float newX, float newY, float newA) {
 }
 
 void Position::setFromCanMsg(TPCANMsg canMsg) {
-    x = canMsg.DATA[0] + 256*canMsg.DATA[1];
-    if (canMsg.DATA[1] > 128)
+    x = canMsg.DATA[0] + 256*(unsigned int)canMsg.DATA[1];
+    if (canMsg.DATA[1] > 127)
         x -= 0x10000;
     x *=1E-3;
     y = canMsg.DATA[2] + 256*canMsg.DATA[3];
-    if (canMsg.DATA[3] > 128)
+    if (canMsg.DATA[3] > 127)
         y -= 0x10000;
     y *= 1E-3;
     a = canMsg.DATA[4] + 256*canMsg.DATA[5];
-    if (canMsg.DATA[5] > 128)
+    if (canMsg.DATA[5] > 127)
         a -= 0x10000;
     a /= 10;
 }

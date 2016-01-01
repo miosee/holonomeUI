@@ -4,13 +4,12 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QVector>
-//#include <QVector3D>
 #include <QGraphicsScene>
-//#include <QGraphicsView>
 #include <QGraphicsLineItem>
 #include "../can/CanTypes.h"
 #include "PCANBasic.h"
 #include "position.h"
+#include "posgraphwin.h"
 
 
 namespace Ui {
@@ -38,14 +37,17 @@ private slots:
     void resizeEvent();
     void on_pushButton_GotoSend_clicked();
 
+    void on_pbGraphPos_clicked();
+
 private:
     Ui::HolonomeUI *ui;
     QTimer *timer;
     bool isConnected;
     QVector<Position> curPos;
-    QVector<float> curPosTime;
+    QVector<double> curPosTime;
     QGraphicsScene *mapScene;
     QVector<QGraphicsLineItem*> trajLines;
+    PosGraphWin *posGraph;
 };
 
 #endif // HOLONOMEUI_H

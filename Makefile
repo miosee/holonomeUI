@@ -182,6 +182,7 @@ Makefile: holonomeUI.pro C:/Qt/5.4/mingw491_32/mkspecs/win32-g++/qmake.conf C:/Q
 		holonomeUI.pro \
 		C:/Qt/5.4/mingw491_32/lib/qtmaind.prl \
 		C:/Qt/5.4/mingw491_32/lib/Qt5Cored.prl \
+		C:/Qt/5.4/mingw491_32/lib/Qt5PrintSupport.prl \
 		C:/Qt/5.4/mingw491_32/lib/Qt5Widgets.prl \
 		C:/Qt/5.4/mingw491_32/lib/Qt5Gui.prl \
 		C:/Qt/5.4/mingw491_32/lib/Qt5Core.prl
@@ -309,6 +310,7 @@ C:\Qt\5.4\mingw491_32\mkspecs\features\lex.prf:
 holonomeUI.pro:
 C:/Qt/5.4/mingw491_32/lib/qtmaind.prl:
 C:/Qt/5.4/mingw491_32/lib/Qt5Cored.prl:
+C:/Qt/5.4/mingw491_32/lib/Qt5PrintSupport.prl:
 C:/Qt/5.4/mingw491_32/lib/Qt5Widgets.prl:
 C:/Qt/5.4/mingw491_32/lib/Qt5Gui.prl:
 C:/Qt/5.4/mingw491_32/lib/Qt5Core.prl:

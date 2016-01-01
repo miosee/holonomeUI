@@ -24,6 +24,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -34,6 +35,7 @@ public:
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QGraphicsView *graphicsView_Map;
+    QVBoxLayout *verticalLayout;
     QGroupBox *groupBox_Pcan;
     QLabel *display_Pcan;
     QPushButton *pushButton_Pcan;
@@ -55,7 +57,12 @@ public:
     QHBoxLayout *horizontalLayout_CurPosA;
     QLabel *label_CurPosA;
     QLineEdit *lineEdit_CurPosA;
+    QGroupBox *groupBox;
+    QPushButton *pbGraphPos;
+    QPushButton *pbGraphSpeed;
+    QCheckBox *checkBox;
     QSpacerItem *verticalSpacer;
+    QHBoxLayout *horizontalLayout;
     QGroupBox *groupBox_SetPos;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_SetPosX;
@@ -138,8 +145,11 @@ public:
         graphicsView_Map = new QGraphicsView(centralWidget);
         graphicsView_Map->setObjectName(QStringLiteral("graphicsView_Map"));
 
-        gridLayout->addWidget(graphicsView_Map, 0, 0, 4, 6);
+        gridLayout->addWidget(graphicsView_Map, 0, 0, 1, 1);
 
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(6);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         groupBox_Pcan = new QGroupBox(centralWidget);
         groupBox_Pcan->setObjectName(QStringLiteral("groupBox_Pcan"));
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -170,7 +180,7 @@ public:
         pushButton_Pcan->setMinimumSize(QSize(100, 0));
         pushButton_Pcan->setMaximumSize(QSize(100, 16777215));
 
-        gridLayout->addWidget(groupBox_Pcan, 0, 6, 1, 1);
+        verticalLayout->addWidget(groupBox_Pcan);
 
         groupBox_PropState = new QGroupBox(centralWidget);
         groupBox_PropState->setObjectName(QStringLiteral("groupBox_PropState"));
@@ -214,7 +224,7 @@ public:
         pushButton_PropStateDisable->setMinimumSize(QSize(100, 23));
         pushButton_PropStateDisable->setMaximumSize(QSize(100, 23));
 
-        gridLayout->addWidget(groupBox_PropState, 1, 6, 1, 1);
+        verticalLayout->addWidget(groupBox_PropState);
 
         groupBox_CurPos = new QGroupBox(centralWidget);
         groupBox_CurPos->setObjectName(QStringLiteral("groupBox_CurPos"));
@@ -296,12 +306,34 @@ public:
         horizontalLayout_CurPosA->addWidget(lineEdit_CurPosA);
 
 
-        gridLayout->addWidget(groupBox_CurPos, 2, 6, 1, 1);
+        verticalLayout->addWidget(groupBox_CurPos);
+
+        groupBox = new QGroupBox(centralWidget);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setMinimumSize(QSize(120, 110));
+        groupBox->setMaximumSize(QSize(120, 110));
+        pbGraphPos = new QPushButton(groupBox);
+        pbGraphPos->setObjectName(QStringLiteral("pbGraphPos"));
+        pbGraphPos->setGeometry(QRect(10, 20, 100, 23));
+        pbGraphSpeed = new QPushButton(groupBox);
+        pbGraphSpeed->setObjectName(QStringLiteral("pbGraphSpeed"));
+        pbGraphSpeed->setGeometry(QRect(10, 50, 100, 23));
+        checkBox = new QCheckBox(groupBox);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+        checkBox->setGeometry(QRect(20, 80, 90, 17));
+
+        verticalLayout->addWidget(groupBox);
 
         verticalSpacer = new QSpacerItem(20, 178, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout->addItem(verticalSpacer, 3, 6, 1, 1);
+        verticalLayout->addItem(verticalSpacer);
 
+
+        gridLayout->addLayout(verticalLayout, 0, 1, 1, 1);
+
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         groupBox_SetPos = new QGroupBox(centralWidget);
         groupBox_SetPos->setObjectName(QStringLiteral("groupBox_SetPos"));
         sizePolicy1.setHeightForWidth(groupBox_SetPos->sizePolicy().hasHeightForWidth());
@@ -381,7 +413,7 @@ public:
         pushButton_SetPosend->setObjectName(QStringLiteral("pushButton_SetPosend"));
         pushButton_SetPosend->setGeometry(QRect(25, 80, 70, 23));
 
-        gridLayout->addWidget(groupBox_SetPos, 4, 0, 1, 1);
+        horizontalLayout->addWidget(groupBox_SetPos);
 
         groupBox_Move = new QGroupBox(centralWidget);
         groupBox_Move->setObjectName(QStringLiteral("groupBox_Move"));
@@ -462,7 +494,7 @@ public:
         pushButton_MoveSend->setObjectName(QStringLiteral("pushButton_MoveSend"));
         pushButton_MoveSend->setGeometry(QRect(25, 80, 70, 23));
 
-        gridLayout->addWidget(groupBox_Move, 4, 1, 1, 1);
+        horizontalLayout->addWidget(groupBox_Move);
 
         groupBox_Goto = new QGroupBox(centralWidget);
         groupBox_Goto->setObjectName(QStringLiteral("groupBox_Goto"));
@@ -561,7 +593,7 @@ public:
         horizontalLayout_GotoButtons->addWidget(checkBox_GotoAlphaEnabled);
 
 
-        gridLayout->addWidget(groupBox_Goto, 4, 2, 1, 1);
+        horizontalLayout->addWidget(groupBox_Goto);
 
         groupBox_SetSpeed = new QGroupBox(centralWidget);
         groupBox_SetSpeed->setObjectName(QStringLiteral("groupBox_SetSpeed"));
@@ -621,7 +653,7 @@ public:
         horizontalLayout_SetSpeedL->addWidget(lineEdit_SetSpeedL);
 
 
-        gridLayout->addWidget(groupBox_SetSpeed, 4, 3, 1, 1);
+        horizontalLayout->addWidget(groupBox_SetSpeed);
 
         groupBox_SetAcc = new QGroupBox(centralWidget);
         groupBox_SetAcc->setObjectName(QStringLiteral("groupBox_SetAcc"));
@@ -682,11 +714,14 @@ public:
         horizontalLayout__SetAccL->addWidget(lineEdit_SetAccL);
 
 
-        gridLayout->addWidget(groupBox_SetAcc, 4, 4, 1, 1);
+        horizontalLayout->addWidget(groupBox_SetAcc);
 
         horizontalSpacer = new QSpacerItem(194, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout->addItem(horizontalSpacer, 4, 5, 1, 1);
+        horizontalLayout->addItem(horizontalSpacer);
+
+
+        gridLayout->addLayout(horizontalLayout, 1, 0, 1, 1);
 
         HolonomeUI->setCentralWidget(centralWidget);
 
@@ -714,8 +749,12 @@ public:
         lineEdit_CurPosX->setText(QString());
         label_CurPosY->setText(QApplication::translate("HolonomeUI", "y (m) :", 0));
         lineEdit_CurPosY->setText(QString());
-        label_CurPosA->setText(QApplication::translate("HolonomeUI", "a (rad) :", 0));
+        label_CurPosA->setText(QApplication::translate("HolonomeUI", "a (\302\260) :", 0));
         lineEdit_CurPosA->setText(QString());
+        groupBox->setTitle(QApplication::translate("HolonomeUI", "Graphs", 0));
+        pbGraphPos->setText(QApplication::translate("HolonomeUI", "Position", 0));
+        pbGraphSpeed->setText(QApplication::translate("HolonomeUI", "Vitesse", 0));
+        checkBox->setText(QApplication::translate("HolonomeUI", "Csg Enabled", 0));
         groupBox_SetPos->setTitle(QApplication::translate("HolonomeUI", "Set Position", 0));
         label_SetPosX->setText(QApplication::translate("HolonomeUI", "x (m) :", 0));
         label_SetPosY->setText(QApplication::translate("HolonomeUI", "y (m) :", 0));

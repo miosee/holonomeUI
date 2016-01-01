@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = holonomeUI
 TEMPLATE = app
@@ -14,13 +14,18 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         holonomeui.cpp \
-    position.cpp
+    position.cpp \
+    posgraphwin.cpp \
+    ../lib/qcustomplot.cpp
 
 HEADERS  += holonomeui.h \
     PCANBasic.h \
-    position.h
+    position.h \
+    posgraphwin.h \
+    ../lib/qcustomplot.h
 
-FORMS    += holonomeui.ui
+FORMS    += holonomeui.ui \
+    posgraphwin.ui
 
 DISTFILES +=
 

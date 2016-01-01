@@ -4,7 +4,6 @@
 #include "../can/CanNetwork.h"
 #include <QTextStream>
 #include <QString>
-#include <math.h>
 
 
 #define canIntToLSB(data) ((BYTE)(data & 0x00FF))
@@ -43,6 +42,9 @@ HolonomeUI::~HolonomeUI()
         CAN_Uninitialize(PCAN_USBBUS1);
     }
     delete ui;
+    delete timer;
+    delete mapScene;
+    delete posGraph;
 }
 
 void HolonomeUI::resizeEvent() {
@@ -95,34 +97,35 @@ void HolonomeUI::timerOut()
     TPCANStatus status;
     TPCANMsg msg;
     TPCANTimestamp timeStamp;
-    static float t0 = 0;
-    float t;
+    static double t0 = 0;
+    double t;
     Position pos;
     static QPoint lastPoint;
     QLine segment;
     QPen penTraj(Qt::blue, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     if (isConnected) {
-        status = CAN_Read(PCAN_USBBUS1, &msg, &timeStamp);
-        switch(status) {
-        case PCAN_ERROR_OK:
-            switch(msg.ID) {
-            case CO_PROP_POS:
-                if (curPos.isEmpty()) {
-                    t0 = (float)timeStamp.millis/1000.0;
-                    t = 0;
-                    pos.setFromCanMsg(msg);
-                    curPos.append(pos);
-                    curPosTime.append(t);
-                    ui->lineEdit_CurPosX->setText(QString("%1").arg(pos.getX(), 0, 'g', 3));
-                    ui->lineEdit_CurPosY->setText(QString("%1").arg(pos.getY(), 0, 'g', 3));
-                    ui->lineEdit_CurPosA->setText(QString("%1").arg(pos.getA(), 0, 'g', 3));
-                    lastPoint.setX(MAP_SCALE*pos.getX());
-                    lastPoint.setY(MAP_SCALE*(2-pos.getY()));
-                } else {
-                    t = (float)timeStamp.millis/1000.0 - t0;
-                    pos.setFromCanMsg(msg);
-                    if (pos != curPos.last()) {
+        status = PCAN_ERROR_BUSLIGHT;
+        while (status != PCAN_ERROR_QRCVEMPTY) {
+            status = CAN_Read(PCAN_USBBUS1, &msg, &timeStamp);
+            switch(status) {
+            case PCAN_ERROR_OK:
+                switch(msg.ID) {
+                case CO_PROP_POS:
+                    if (curPos.isEmpty()) {
+                        t0 = 1E-3*timeStamp.millis + 1E-6*timeStamp.micros;
+                        t = 0;
+                        pos.setFromCanMsg(msg);
+                        curPos.append(pos);
+                        curPosTime.append(t);
+                        ui->lineEdit_CurPosX->setText(QString("%1").arg(pos.getX(), 0, 'g', 3));
+                        ui->lineEdit_CurPosY->setText(QString("%1").arg(pos.getY(), 0, 'g', 3));
+                        ui->lineEdit_CurPosA->setText(QString("%1").arg(pos.getA(), 0, 'g', 3));
+                        lastPoint.setX(MAP_SCALE*pos.getX());
+                        lastPoint.setY(MAP_SCALE*(2-pos.getY()));
+                    } else {
+                        t = 1E-3*timeStamp.millis + 1E-6*timeStamp.micros - t0;
+                        pos.setFromCanMsg(msg);
                         curPos.append(pos);
                         curPosTime.append(t);
                         ui->lineEdit_CurPosX->setText(QString("%1").arg(pos.getX(), 0, 'g', 3));
@@ -132,64 +135,64 @@ void HolonomeUI::timerOut()
                         lastPoint.setX(MAP_SCALE*pos.getX());
                         lastPoint.setY(MAP_SCALE*(2-pos.getY()));
                         segment.setP2(lastPoint);
-                        trajLines.append(mapScene->addLine(segment));
+                        trajLines.append(mapScene->addLine(segment, penTraj));
                         resizeMap();
                     }
-                }
-                break;
-            case CO_PROP_STATUS:
-                switch ((propStateType)msg.DATA[0]) {
-                case DISABLED:
-                    ui->display_PropState->setText("Disabled");
                     break;
-                case STANDING:
-                    ui->display_PropState->setText("Standing");
-                    break;
-                case RELATIVE_MOVE:
-                    ui->display_PropState->setText("Moving");
-                    break;
-                case TRAJECTORY:
-                    ui->display_PropState->setText("Trajectory");
-                    break;
-                case TEST:
-                    ui->display_PropState->setText("Test");
-                    break;
-                case TRAJ_START_OUT:
-                    ui->display_PropState->setText("Start out");
-                    break;
-                case TRAJ_END_OUT:
-                    ui->display_PropState->setText("End out");
-                    break;
-                case TRAJ_START_OBS:
-                    ui->display_PropState->setText("Start obs");
-                    break;
-                case TRAJ_END_OBS:
-                    ui->display_PropState->setText("End obs");
-                    break;
-                case TRAJ_NO_WAY:
-                    ui->display_PropState->setText("No Way");
+                case CO_PROP_STATUS:
+                    switch ((propStateType)msg.DATA[0]) {
+                    case DISABLED:
+                        ui->display_PropState->setText("Disabled");
+                        break;
+                    case STANDING:
+                        ui->display_PropState->setText("Standing");
+                        break;
+                    case RELATIVE_MOVE:
+                        ui->display_PropState->setText("Moving");
+                        break;
+                    case TRAJECTORY:
+                        ui->display_PropState->setText("Trajectory");
+                        break;
+                    case TEST:
+                        ui->display_PropState->setText("Test");
+                        break;
+                    case TRAJ_START_OUT:
+                        ui->display_PropState->setText("Start out");
+                        break;
+                    case TRAJ_END_OUT:
+                        ui->display_PropState->setText("End out");
+                        break;
+                    case TRAJ_START_OBS:
+                        ui->display_PropState->setText("Start obs");
+                        break;
+                    case TRAJ_END_OBS:
+                        ui->display_PropState->setText("End obs");
+                        break;
+                    case TRAJ_NO_WAY:
+                        ui->display_PropState->setText("No Way");
+                        break;
+                    default:
+                        break;
+                    }
                     break;
                 default:
                     break;
                 }
+            case PCAN_ERROR_QRCVEMPTY:
+                ui->display_Pcan->setText("Connected");
+                break;
+            case PCAN_ERROR_BUSLIGHT:
+                ui->display_Pcan->setText("Bus Light");
+                break;
+            case PCAN_ERROR_BUSHEAVY:
+                ui->display_Pcan->setText("Bus Heavy");
+                break;
+            case PCAN_ERROR_BUSOFF:
+                ui->display_Pcan->setText("Bus Off");
                 break;
             default:
                 break;
             }
-        case PCAN_ERROR_QRCVEMPTY:
-            ui->display_Pcan->setText("Connected");
-            break;
-        case PCAN_ERROR_BUSLIGHT:
-            ui->display_Pcan->setText("Bus Light");
-            break;
-        case PCAN_ERROR_BUSHEAVY:
-            ui->display_Pcan->setText("Bus Heavy");
-            break;
-        case PCAN_ERROR_BUSOFF:
-            ui->display_Pcan->setText("Bus Off");
-            break;
-        default:
-            break;
         }
     }
 }
@@ -356,4 +359,11 @@ void HolonomeUI::on_pushButton_GotoSend_clicked()
             }
         }
     }
+}
+
+void HolonomeUI::on_pbGraphPos_clicked()
+{
+    posGraph = new PosGraphWin(this);
+    posGraph->show();
+    posGraph->addData(curPosTime, curPos);
 }
